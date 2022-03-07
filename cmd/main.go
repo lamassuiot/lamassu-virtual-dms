@@ -9,8 +9,8 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/lamassuiot/lamassu-default-dms/pkg/api/service"
-	"github.com/lamassuiot/lamassu-default-dms/pkg/api/transport"
+	"github.com/lamassuiot/lamassu-default-dms/pkg/server/api/service"
+	"github.com/lamassuiot/lamassu-default-dms/pkg/server/api/transport"
 	"github.com/lamassuiot/lamassu-default-dms/pkg/server/configs"
 	filestore "github.com/lamassuiot/lamassu-default-dms/pkg/server/models/device/store/file"
 	"github.com/lamassuiot/lamassu-default-dms/pkg/server/utils"

@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/lamassuiot/lamassu-default-dms/pkg/models/device/store"
+	"github.com/lamassuiot/lamassu-default-dms/pkg/server/models/device/store"
 
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"

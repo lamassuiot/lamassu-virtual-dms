@@ -13,8 +13,8 @@ import (
 	"github.com/go-kit/kit/transport"
 	httptransport "github.com/go-kit/kit/transport/http"
 	"github.com/go-kit/log"
-	"github.com/lamassuiot/lamassu-default-dms/pkg/api/endpoint"
-	"github.com/lamassuiot/lamassu-default-dms/pkg/api/service"
+	"github.com/lamassuiot/lamassu-default-dms/pkg/server/api/endpoint"
+	"github.com/lamassuiot/lamassu-default-dms/pkg/server/api/service"
 	stdopentracing "github.com/opentracing/opentracing-go"
 )
 
@@ -88,12 +88,12 @@ func encodeError(_ context.Context, err error, w http.ResponseWriter) {
 }
 
 func decodeHealthRequest(ctx context.Context, r *http.Request) (request interface{}, err error) {
-	var req endpoint.healthRequest
+	var req endpoint.HealthRequest
 	return req, nil
 }
 func codeFrom(err error) int {
 	switch err {
-	case ErrInvalidID, ErrInvalidOperation:
+	case service.ErrInvalidID, service.ErrInvalidOperation:
 		return http.StatusBadRequest
 	default:
 		return http.StatusInternalServerError

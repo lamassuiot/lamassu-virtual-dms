@@ -7,7 +7,7 @@ import (
 	"net/http"
 
 	stdjwt "github.com/dgrijalva/jwt-go"
-	"github.com/lamassuiot/lamassu-default-dms/pkg/utils"
+	"github.com/lamassuiot/lamassu-default-dms/pkg/server/utils"
 )
 
 type Auth interface {
