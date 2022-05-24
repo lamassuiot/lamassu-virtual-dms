@@ -58,4 +58,4 @@ In the Lamassu-Virtual-DMS we have two pages:
 
 2. Make the Auto_Enroll of the devices indicating the ID of a DMS.
 
-<img src="AutoEnroll.png" alt="Auto Enroll Devices UI" title="Auto " />
+<img src="AutoEnroll.png" alt="Auto Enroll Devices UI" title="Auto Enroll" />
