@@ -1,5 +1,5 @@
 <a href="https://www.lamassu.io/">
-    <img src="logo.png" alt="Lamassu logo" title="Lamassu" align="right" height="80" />
+    <img src="img/logo.png" alt="Lamassu logo" title="Lamassu" align="right" height="80" />
 </a>
 
 Lamassu Virtual DMS
@@ -90,7 +90,7 @@ In the Lamassu-Virtual-DMS we have two pages:
 
 1. Create the DMS, once the DMS is created, the Auto_Enroll of the devices is done.
 
-![virtualDMSUI](CreateDMS.PNG)
+![virtualDMSUI](img/CreateDMS.PNG)
 
 2. Make the Auto_Enroll of the devices indicating the ID of a DMS.
-![virtualDMSUI](AutoEnroll.PNG)
+![virtualDMSUI](img/AutoEnroll.PNG)
