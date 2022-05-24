@@ -43,8 +43,44 @@ To launch Lamassu-Virtual-DMS follow the next steps:
 
 ```
 *Common_name and Dms_name have to have the same value
+3. Create directories to store DMS and device certificates
 
-4. Run the Lamassu-Default-DMS UI:
+    ```
+    mkdir -p /home/$USER/virtual-dms-data/devices_certificates
+    mkdir -p /home/$USER/virtual-dms-data/dms_certificates
+    ```
+4. `config.json` file with default values
+
+```
+{
+    "dms": {
+        "device_store": "/home/$USER/virtual-dms-data/devices_certificates",
+        "dms_store": "/home/$USER/virtual-dms-data/dms_certificates",
+        "endpoint":"dev.lamassu.io/api/dmsenroller",
+        "dms_name":"Virtual DMS",
+        "common_name":"Virtual DMS",
+        "country":"ES",
+        "locality":"Mondragon",
+        "organization":"LKS",
+        "organization_unit":"LKS PKI",
+        "state":"Guipuzcoa"
+
+
+    },
+    "devmanager":{
+        "devcrt": "<DEV_CERTIFICATE>",
+        "addr": "dev.lamassu.io/api/devmanager"
+    },
+    "auth":{
+        "endpoint":"auth-dev-lamassu.io",
+        "username":"enroller",
+        "password":"enroller"
+    }
+}
+
+```
+
+5. Run the Lamassu-Default-DMS UI:
     ```
     go run cmd/main.go
     ```
@@ -54,8 +90,7 @@ In the Lamassu-Virtual-DMS we have two pages:
 
 1. Create the DMS, once the DMS is created, the Auto_Enroll of the devices is done.
 
-<img src="CreateDMS.png" alt="Create DMS UI" title="Create DMS" />
+![virtualDMSUI](CreateDMS.PNG)
 
 2. Make the Auto_Enroll of the devices indicating the ID of a DMS.
-
-<img src="AutoEnroll.png" alt="Auto Enroll Devices UI" title="Auto Enroll" />
+![virtualDMSUI](AutoEnroll.PNG)
