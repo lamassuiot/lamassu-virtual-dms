@@ -1,0 +1,26 @@
+{
+    "dms": {
+        "device_store": "<DEVICES_STORE>",
+        "dms_store": "<DMS_STORE>",
+        "endpoint":"<DMS_SERVER>",
+        "dms_name":"<DEFAULT_DMS>",
+        "common_name":"<DEFAULT_DMS>",
+        "country":"<COUNTRY>",
+        "locality":"<LOCALITY>",
+        "organization":"<ORGANIZATION>",
+        "organization_unit":"<ORGANIZATION_UNIT>",
+        "state":"<STATE>"
+
+
+    },
+    "devmanager":{
+        "devcrt": "<DEV_CERTIFICATE>",
+        "addr": "<DEVMANAGER_SERVER>"
+    },
+    "auth":{
+        "endpoint":"<AUTH_SERVER>",
+        "username":"<PASSWORD>",
+        "password":"<PASSWORD>"
+
+    }
+}

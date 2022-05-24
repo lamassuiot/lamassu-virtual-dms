@@ -2,19 +2,14 @@ module github.com/lamassuiot/lamassu-default-dms
 
 go 1.16
 
-//replace github.com/lamassuiot/lamassu-ca => /home/ikerlan/lamassu/lamassu-ca/
-
-//replace github.com/lamassuiot/lamassu-est => /home/ikerlan/lamassu/lamassu-est/
-
 require (
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	github.com/gdamore/tcell/v2 v2.4.1-0.20210905002822-f057f0a857a1
+	github.com/globalsign/pemfile v1.0.0 // indirect
 	github.com/go-kit/kit v0.12.0
 	github.com/go-kit/log v0.2.0
-	github.com/gorilla/mux v1.8.0
 	github.com/jakehl/goid v1.1.0
-	github.com/kelseyhightower/envconfig v1.4.0
-	github.com/lamassuiot/lamassu-est v0.2.6
-	github.com/opentracing/opentracing-go v1.2.0
-	github.com/prometheus/client_golang v1.11.0
-	github.com/uber/jaeger-client-go v2.30.0+incompatible
+	github.com/lamassuiot/lamassuiot v0.0.0-20220519095217-75c094a051be
+	github.com/rivo/tview v0.0.0-20220106183741-90d72bc664f5 //
+	go.mozilla.org/pkcs7 v0.0.0-20210826202110-33d05740a352 // indirect
+
 )
