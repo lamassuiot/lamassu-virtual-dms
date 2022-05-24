@@ -1,26 +1,26 @@
 {
     "dms": {
-        "device_store": "<DEVICES_STORE>",
-        "dms_store": "<DMS_STORE>",
-        "endpoint":"<DMS_SERVER>",
-        "dms_name":"<DEFAULT_DMS>",
-        "common_name":"<DEFAULT_DMS>",
-        "country":"<COUNTRY>",
-        "locality":"<LOCALITY>",
-        "organization":"<ORGANIZATION>",
-        "organization_unit":"<ORGANIZATION_UNIT>",
-        "state":"<STATE>"
+        "device_store": "/home/ikerlan/lamassu/lamassu-virtual-dms/devices_certificates",
+        "dms_store": "/home/ikerlan/lamassu/lamassu-virtual-dms/dms_certificates",
+        "endpoint":"dev-lamassu.zpd.ikerlan.es/api/dmsenroller",
+        "dms_name":"Default-DMS",
+        "common_name":"Default-DMS",
+        "country":"ES",
+        "locality":"ARRASATE",
+        "organization":"IKERLAN",
+        "organization_unit":"ZPD",
+        "state":"Gipuzkoa"
 
 
     },
     "devmanager":{
-        "devcrt": "<DEV_CERTIFICATE>",
-        "addr": "<DEVMANAGER_SERVER>"
+        "devcrt": "/home/ikerlan/lamassu-compose-v2/tls-certificates/downstream/tls.crt",
+        "addr": "dev-lamassu.zpd.ikerlan.es/api/devmanager"
     },
     "auth":{
-        "endpoint":"<AUTH_SERVER>",
-        "username":"<PASSWORD>",
-        "password":"<PASSWORD>"
+        "endpoint":"auth.dev-lamassu.zpd.ikerlan.es",
+        "username":"enroller",
+        "password":"enroller"
 
     }
 }
