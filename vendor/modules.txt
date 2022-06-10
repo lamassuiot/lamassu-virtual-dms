@@ -41,8 +41,6 @@ github.com/gdamore/tcell/v2/terminfo/x/xfce
 github.com/gdamore/tcell/v2/terminfo/x/xterm
 github.com/gdamore/tcell/v2/terminfo/x/xterm_kitty
 github.com/gdamore/tcell/v2/terminfo/x/xterm_termite
-# github.com/globalsign/pemfile v1.0.0
-## explicit
 # github.com/go-kit/kit v0.12.0
 ## explicit
 github.com/go-kit/kit/log/level
@@ -55,8 +53,9 @@ github.com/go-logfmt/logfmt
 # github.com/jakehl/goid v1.1.0
 ## explicit
 github.com/jakehl/goid
-# github.com/lamassuiot/lamassuiot v0.0.0-20220519095217-75c094a051be
+# github.com/lamassuiot/lamassuiot v0.0.1
 ## explicit
+github.com/lamassuiot/lamassuiot/pkg/dms-enroller/common/dto
 github.com/lamassuiot/lamassuiot/pkg/est/client
 github.com/lamassuiot/lamassuiot/pkg/utils
 # github.com/lucasb-eyer/go-colorful v1.2.0

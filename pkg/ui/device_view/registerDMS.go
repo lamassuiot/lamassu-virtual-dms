@@ -75,7 +75,7 @@ func GetRegisterDMSItem(logger log.Logger, data *observer.DeviceState, app *tvie
 			if key_type == "RSA" {
 				keybits = []string{"2048", "3072", "4096"}
 			} else if key_type == "EC" {
-				keybits = []string{"224", "256", "384"}
+				keybits = []string{"256", "384"}
 			} else {
 				keybits = []string{}
 			}

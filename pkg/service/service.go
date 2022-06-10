@@ -14,6 +14,7 @@ import (
 	"github.com/lamassuiot/lamassu-default-dms/pkg/device/store"
 	"github.com/lamassuiot/lamassu-default-dms/pkg/observer"
 	"github.com/lamassuiot/lamassu-default-dms/pkg/utils"
+	dmsDTO "github.com/lamassuiot/lamassuiot/pkg/dms-enroller/common/dto"
 	"github.com/lamassuiot/lamassuiot/pkg/est/client"
 )
 
@@ -21,7 +22,7 @@ func Enroll(lamassuEstClient client.LamassuEstClient, data *observer.DeviceState
 	level.Info(logger).Log("msg", "Enroll New Device... ")
 	var ctx context.Context
 	var device config.Device
-	var dmss []config.DMS
+	var dmss dmsDTO.GetDmsResponse
 
 	deviceregister := []string{"yes", "no"}
 	randomIndex := rand.Intn(len(deviceregister))
@@ -64,15 +65,15 @@ func Enroll(lamassuEstClient client.LamassuEstClient, data *observer.DeviceState
 		jsonString, _ := json.Marshal(resp)
 		json.Unmarshal(jsonString, &dmss)
 		var CAs []string
-		for _, dms := range dmss {
+		for _, dms := range dmss.Dmss {
 			if data.Dms.Id == dms.Id {
-				CAs = dms.AuthorizedCAs
+				CAs = append(CAs, dms.AuthorizedCAs...)
 			}
 		}
 		index := rand.Intn(len(CAs))
 		aps = CAs[index]
 	}
-
+	level.Info(logger).Log("msg", aps)
 	devCert, err := lamassuEstClient.Enroll(ctx, aps, csr)
 
 	if err != nil {
