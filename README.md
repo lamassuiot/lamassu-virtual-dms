@@ -14,7 +14,8 @@ To launch Lamassu-Virtual-DMS follow the next steps:
 2. Change the configuration variables of the `config.json` file.
 
 ```
-{
+{   
+    "domain": "<DOMAIN>",
     "dms": {
         "device_store": "<DEVICES_STORE>", // Folder where device certificates are stored
         "dms_store": "<DMS_STORE>", // Folder where DMS certificates are stored
@@ -34,10 +35,7 @@ To launch Lamassu-Virtual-DMS follow the next steps:
         "addr": "<DEVMANAGER_SERVER>" //Device Manager Server Endpoint
     },
     "auth":{
-        "endpoint":"<AUTH_SERVER>", // Authentication Server endpoint
-        "username":"<PASSWORD>", // User name to connect to the authentication server
-        "password":"<PASSWORD>" // Password to connect to the authentication server
-
+        "endpoint":"<AUTH_SERVER>" // Authentication Server endpoint
     }
 }
 
@@ -53,6 +51,7 @@ To launch Lamassu-Virtual-DMS follow the next steps:
 
 ```
 {
+    "domain": "dev.lamassu.io",
     "dms": {
         "device_store": "/home/$USER/virtual-dms-data/devices_certificates",
         "dms_store": "/home/$USER/virtual-dms-data/dms_certificates",
@@ -72,9 +71,7 @@ To launch Lamassu-Virtual-DMS follow the next steps:
         "addr": "dev.lamassu.io/api/devmanager"
     },
     "auth":{
-        "endpoint":"auth-dev-lamassu.io",
-        "username":"enroller",
-        "password":"enroller"
+        "endpoint":"auth-dev-lamassu.io"
     }
 }
 
