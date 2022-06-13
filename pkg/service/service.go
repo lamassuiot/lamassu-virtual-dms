@@ -3,47 +3,58 @@ package service
 import (
 	"context"
 	"encoding/base64"
-	"encoding/json"
 	"io/ioutil"
 	"math/rand"
-	"net/http"
+	"net/url"
 
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
-	"github.com/lamassuiot/lamassu-default-dms/pkg/config"
+	"github.com/jakehl/goid"
 	"github.com/lamassuiot/lamassu-default-dms/pkg/device/store"
 	"github.com/lamassuiot/lamassu-default-dms/pkg/observer"
 	"github.com/lamassuiot/lamassu-default-dms/pkg/utils"
-	dmsDTO "github.com/lamassuiot/lamassuiot/pkg/dms-enroller/common/dto"
-	"github.com/lamassuiot/lamassuiot/pkg/est/client"
+	lamassuDevClient "github.com/lamassuiot/lamassuiot/pkg/device-manager/client"
+	devDTO "github.com/lamassuiot/lamassuiot/pkg/device-manager/common/dto"
+	lamassuDMSClient "github.com/lamassuiot/lamassuiot/pkg/dms-enroller/client"
+	"github.com/lamassuiot/lamassuiot/pkg/dms-enroller/common/dto"
+	estclient "github.com/lamassuiot/lamassuiot/pkg/est/client"
+	"github.com/lamassuiot/lamassuiot/pkg/utils/client"
 )
 
-func Enroll(lamassuEstClient client.LamassuEstClient, data *observer.DeviceState, file store.File, aps string, token config.Token, dmsname string, logger log.Logger) (deviceAlias string, deviceId string, certSN string, CAname string, err error) {
+func Enroll(lamassuEstClient estclient.LamassuEstClient, data *observer.DeviceState, file store.File, aps string, dmsname string, logger log.Logger) (deviceAlias string, deviceId string, certSN string, CAname string, err error) {
 	level.Info(logger).Log("msg", "Enroll New Device... ")
 	var ctx context.Context
-	var device config.Device
-	var dmss dmsDTO.GetDmsResponse
+	var device devDTO.Device
 
+	devclient, _ := lamassuDevClient.NewLamassuDeviceManagerClient(client.ClientConfiguration{
+		URL: &url.URL{
+			Scheme: "https",
+			Host:   data.Config.Domain,
+			Path:   "/api/devmanager/",
+		},
+		AuthMethod: client.JWT,
+		AuthMethodConfig: &client.JWTConfig{
+			Username: "enroller",
+			Password: "enroller",
+			URL: &url.URL{
+				Scheme: "https",
+				Host:   data.Config.Auth.Endpoint,
+			},
+			CACertificate: data.Config.DevManager.DevCrt,
+		},
+		CACertificate: data.Config.DevManager.DevCrt,
+	})
 	deviceregister := []string{"yes", "no"}
 	randomIndex := rand.Intn(len(deviceregister))
 	mode := deviceregister[randomIndex]
 
 	if mode == "yes" {
 		level.Info(logger).Log("msg", "Register Device... ")
-
-		body := utils.CreateRequestBody(data.Dms.Id)
-
-		req, err := utils.NewRequest(http.MethodPost, "/v1/devices", data.Config.DevManager.DevAddr, "application/json", "application/json", "", "", "", "", body, token.AccesToken)
+		deviceID := goid.NewV4UUID().String()
+		device, err = devclient.CreateDevice(ctx, utils.AliasName(), deviceID, data.Dms.Id, "", utils.Tags(), utils.IconName(), utils.IconColor())
 		if err != nil {
 			level.Error(logger).Log("err", err)
 		}
-		_, resp, err := utils.Do(req, data)
-		if err != nil {
-			level.Error(logger).Log("err", err)
-			return "", "", "", "", err
-		}
-		jsonString, err := json.Marshal(resp)
-		json.Unmarshal(jsonString, &device)
 	}
 
 	privateKeyBytes, csr, err := utils.GenrateRandKey(logger, device)
@@ -52,26 +63,31 @@ func Enroll(lamassuEstClient client.LamassuEstClient, data *observer.DeviceState
 		return "", "", "", "", err
 	}
 	if aps == "" {
-		req, err := utils.NewRequest(http.MethodGet, "/v1/", data.Config.Dms.Endpoint, "", "application/json", "", "", "", "", nil, token.AccesToken)
+		dmsClient, _ := lamassuDMSClient.NewLamassuEnrollerClient(client.ClientConfiguration{
+			URL: &url.URL{
+				Scheme: "https",
+				Host:   data.Config.Domain,
+				Path:   "/api/dmsenroller/",
+			},
+			AuthMethod: client.JWT,
+			AuthMethodConfig: &client.JWTConfig{
+				Username: "enroller",
+				Password: "enroller",
+				URL: &url.URL{
+					Scheme: "https",
+					Host:   data.Config.Auth.Endpoint,
+				},
+				CACertificate: data.Config.DevManager.DevCrt,
+			},
+			CACertificate: data.Config.DevManager.DevCrt,
+		})
+		dms, err := dmsClient.GetDMSbyID(ctx, data.Dms.Id)
 		if err != nil {
 			level.Error(logger).Log("err", err)
 			return "", "", "", "", err
 		}
-		_, resp, err := utils.Do(req, data)
-		if err != nil {
-			level.Error(logger).Log("err", err)
-			return "", "", "", "", err
-		}
-		jsonString, _ := json.Marshal(resp)
-		json.Unmarshal(jsonString, &dmss)
-		var CAs []string
-		for _, dms := range dmss.Dmss {
-			if data.Dms.Id == dms.Id {
-				CAs = append(CAs, dms.AuthorizedCAs...)
-			}
-		}
-		index := rand.Intn(len(CAs))
-		aps = CAs[index]
+		index := rand.Intn(len(dms.AuthorizedCAs))
+		aps = dms.AuthorizedCAs[index]
 	}
 	level.Info(logger).Log("msg", aps)
 	devCert, err := lamassuEstClient.Enroll(ctx, aps, csr)
@@ -88,55 +104,19 @@ func Enroll(lamassuEstClient client.LamassuEstClient, data *observer.DeviceState
 	}
 	return device.Alias, csr.Subject.CommonName, utils.InsertNth(utils.ToHexInt(devCert.SerialNumber), 2), aps, nil
 }
-func RequestToken(data *observer.DeviceState, logger log.Logger) (config.Token, error) {
-	var token config.Token
-	level.Info(logger).Log("msg", "Request Access Token... ")
-	req, err := utils.NewRequest(http.MethodPost, "/auth/realms/lamassu/protocol/openid-connect/token", data.Config.Auth.Endpoint, "application/x-www-form-urlencoded", "", "password", "frontend", data.Config.Auth.Username, data.Config.Auth.Password, nil, "")
-	if err != nil {
-		level.Error(logger).Log("err", err)
-		return config.Token{}, err
-	}
 
-	_, resp, err := utils.Do(req, data)
-	if err != nil {
-		level.Error(logger).Log("err", err)
-		return config.Token{}, err
-	}
-	jsonString, _ := json.Marshal(resp)
-	json.Unmarshal(jsonString, &token)
-	return token, nil
-}
-
-func RegisterDMS(data *observer.DeviceState, file store.File, name string, subject config.Subject, PrivateKeyMetadata config.PrivateKeyMetadata, logger log.Logger) (string, error) {
-	var dms config.DmsCreationResponse
-
-	token, err := RequestToken(data, logger)
+func RegisterDMS(data *observer.DeviceState, file store.File, name string, subject dto.Subject, PrivateKeyMetadata dto.PrivateKeyMetadata, dmsClient lamassuDMSClient.LamassuEnrollerClient, logger log.Logger) (string, error) {
+	key, dms, err := dmsClient.CreateDMSForm(context.Background(), subject, PrivateKeyMetadata, name)
 	if err != nil {
 		level.Error(logger).Log("err", err)
 		return "", err
 	}
-	body := utils.CreateDmsRequestBody(name, subject, PrivateKeyMetadata)
+	privkey, _ := base64.StdEncoding.DecodeString(key)
 
-	req, err := utils.NewRequest(http.MethodPost, "/v1/"+name+"/form", data.Config.Dms.Endpoint, "application/json", "application/json", "", "", "", "", body, token.AccesToken)
+	err = ioutil.WriteFile(data.Config.Dms.DmsStore+"/dms-"+dms.Id+".key", privkey, 0644)
 	if err != nil {
 		level.Error(logger).Log("err", err)
 	}
-	_, resp, err := utils.Do(req, data)
-	if err != nil {
-		level.Error(logger).Log("err", err)
-		return "", err
-	}
-	jsonString, err := json.Marshal(resp)
-	if err != nil {
-		level.Error(logger).Log("err", err)
-	}
-	json.Unmarshal(jsonString, &dms)
-	key, _ := base64.StdEncoding.DecodeString(dms.PrivKey)
-
-	err = ioutil.WriteFile(data.Config.Dms.DmsStore+"/dms-"+dms.Dms.Id+".key", key, 0644)
-	if err != nil {
-		level.Error(logger).Log("err", err)
-	}
-	level.Info(logger).Log("msg", "KEY with ID "+dms.Dms.Id+" inserted in file system")
-	return dms.Dms.Id, nil
+	level.Info(logger).Log("msg", "KEY with ID "+dms.Id+" inserted in file system")
+	return dms.Id, nil
 }

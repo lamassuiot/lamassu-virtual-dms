@@ -65,17 +65,13 @@ func GetEnrollItem(logger log.Logger, data *observer.DeviceState, app *tview.App
 						app.ForceDraw()
 						break
 					}
-					token, err := service.RequestToken(data, logger)
-					if err != nil {
-						level.Error(logger).Log("err", err)
 
-					}
 					certContent, err := ioutil.ReadFile(dmsCrtFile)
 					cpb, _ := pem.Decode(certContent)
 
 					crt, err := x509.ParseCertificate(cpb.Bytes)
 
-					alias, id, sn, ca, err := service.Enroll(lamassuEstClient, data, data.DeviceFile, data.Aps, token, crt.Subject.CommonName, logger)
+					alias, id, sn, ca, err := service.Enroll(lamassuEstClient, data, data.DeviceFile, data.Aps, crt.Subject.CommonName, logger)
 					if err != nil {
 						level.Error(logger).Log("err", err)
 					} else {

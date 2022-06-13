@@ -1,4 +1,5 @@
 {
+    "domain":"dev.lamassu.io",
     "dms": {
         "device_store": "/home/$USER/virtual-dms-data/devices_certificates",
         "dms_store": "/home/$USER/virtual-dms-data/dms_certificates",
@@ -18,8 +19,6 @@
         "addr": "dev.lamassu.io/api/devmanager"
     },
     "auth":{
-        "endpoint":"auth-dev-lamassu.io",
-        "username":"enroller",
-        "password":"enroller"
+        "endpoint":"auth.dev-lamassu.zpd.ikerlan.es"
     }
 }

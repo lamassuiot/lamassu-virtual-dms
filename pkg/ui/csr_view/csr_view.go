@@ -3,9 +3,9 @@ package csrview
 import (
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
-	"github.com/lamassuiot/lamassu-default-dms/pkg/config"
 	"github.com/lamassuiot/lamassu-default-dms/pkg/observer"
 	"github.com/lamassuiot/lamassu-default-dms/pkg/utils"
+	"github.com/lamassuiot/lamassuiot/pkg/dms-enroller/common/dto"
 	"github.com/rivo/tview"
 )
 
@@ -28,7 +28,7 @@ func (s *concreteObserver) Update(t interface{}) {
 	view = DrawView(t.(*observer.DeviceState).Dms)
 }
 
-func DrawView(dms config.DMS) *tview.TextView {
+func DrawView(dms dto.DMS) *tview.TextView {
 	txt := "This DMS has not been yet registered"
 	if dms.CerificateBase64 != "" {
 		txt, _ = utils.DecodeB64(dms.CsrBase64)

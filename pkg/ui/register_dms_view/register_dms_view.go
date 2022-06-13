@@ -7,8 +7,8 @@ import (
 	"github.com/gdamore/tcell/v2"
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
-	"github.com/lamassuiot/lamassu-default-dms/pkg/config"
 	"github.com/lamassuiot/lamassu-default-dms/pkg/observer"
+	"github.com/lamassuiot/lamassuiot/pkg/dms-enroller/common/dto"
 	"github.com/rivo/tview"
 )
 
@@ -32,7 +32,7 @@ func (s *concreteObserver) Update(t interface{}) {
 	grid = DrawGrid(t.(*observer.DeviceState).Dms)
 }
 
-func DrawGrid(dms config.DMS) *tview.Grid {
+func DrawGrid(dms dto.DMS) *tview.Grid {
 
 	grid.AddItem(tview.NewTextView().SetText("DMS ID").SetTextColor(tcell.ColorYellow), 0, 0, 1, 1, 0, 0, false)
 	grid.AddItem(tview.NewTextView().SetText(dms.Id), 0, 1, 1, 1, 0, 0, false)

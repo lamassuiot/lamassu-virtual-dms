@@ -2,6 +2,7 @@
 package main
 
 import (
+	"flag"
 	"os"
 
 	"github.com/go-kit/log"
@@ -11,8 +12,12 @@ import (
 	"github.com/lamassuiot/lamassu-default-dms/pkg/observer"
 	deviceview "github.com/lamassuiot/lamassu-default-dms/pkg/ui/device_view"
 	enrollerdevicesview "github.com/lamassuiot/lamassu-default-dms/pkg/ui/enroller_devices_view"
+	"github.com/lamassuiot/lamassuiot/pkg/dms-enroller/common/dto"
 	"github.com/rivo/tview"
 )
+
+var privkey = flag.String("privkey", "", "privkey")
+var dmsid = flag.String("dmsid", "", "dmsid")
 
 func main() {
 	var logger log.Logger
@@ -24,6 +29,7 @@ func main() {
 		logger = level.NewFilter(logger, level.AllowDebug())
 		logger = log.With(logger, "caller", log.DefaultCaller)
 	}
+	flag.Parse()
 	cfg, _ := config.NewConfig()
 	deviceFile := filestore.NewFile(cfg.Dms.DeviceStore, logger)
 	level.Info(logger).Log("msg", "Devices CSRs, CERTs and KEY filesystem home path created")
@@ -36,9 +42,11 @@ func main() {
 		Devices:    make([]observer.EnrolledDeviceData, 0),
 		Config:     cfg,
 		Aps:        "",
+		DmsPrivKey: *privkey,
+		DmsId:      *dmsid,
 		DeviceFile: deviceFile,
 		DmsFile:    dmsFile,
-		Dms:        config.DMS{},
+		Dms:        dto.DMS{},
 	}
 
 	flex := tview.NewFlex().

@@ -8,6 +8,7 @@ import (
 	"github.com/go-kit/log/level"
 	"github.com/lamassuiot/lamassu-default-dms/pkg/config"
 	"github.com/lamassuiot/lamassu-default-dms/pkg/device/store"
+	"github.com/lamassuiot/lamassuiot/pkg/dms-enroller/common/dto"
 )
 
 type EnrolledDeviceData struct {
@@ -24,8 +25,10 @@ type DeviceState struct {
 	Aps     string
 	//Auto       string
 	DeviceFile store.File
+	DmsPrivKey string
+	DmsId      string
 	DmsFile    store.File
-	Dms        config.DMS
+	Dms        dto.DMS
 	Bits       []string
 	Stop       bool
 
@@ -66,7 +69,7 @@ func (s *DeviceState) AddDevice(device EnrolledDeviceData, logger log.Logger) {
 	s.Devices = append(s.Devices, device)
 	s.Notify(logger)
 }
-func (s *DeviceState) EditDMS(dms config.DMS, logger log.Logger) {
+func (s *DeviceState) EditDMS(dms dto.DMS, logger log.Logger) {
 	s.Dms = dms
 	s.Notify(logger)
 }
