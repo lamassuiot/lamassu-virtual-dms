@@ -15,7 +15,6 @@ import (
 	"github.com/lamassuiot/lamassu-default-dms/pkg/observer"
 	"github.com/lamassuiot/lamassu-default-dms/pkg/service"
 	enrollerdevicesview "github.com/lamassuiot/lamassu-default-dms/pkg/ui/enroller_devices_view"
-	"github.com/lamassuiot/lamassu-default-dms/pkg/utils"
 	lamassuDMSClient "github.com/lamassuiot/lamassuiot/pkg/dms-enroller/client"
 	"github.com/lamassuiot/lamassuiot/pkg/dms-enroller/common/dto"
 	"github.com/lamassuiot/lamassuiot/pkg/utils/client"
@@ -70,10 +69,7 @@ func GetRegisterDMSItem(logger log.Logger, data *observer.DeviceState, app *tvie
 		view = DrawDMS(data)
 		form := tview.NewForm().
 			AddButton("Check if the DMS is approved", func() {
-				dmsKey, err := utils.ReadKey(data.DmsPrivKey)
-				if err != nil {
-					level.Error(logger).Log("err", err)
-				}
+				key, _ := base64.StdEncoding.DecodeString(data.DmsPrivKey)
 				for {
 					statusTextView.SetText("DMS with ID " + data.DmsId + " is registered, Pending approval...")
 					app.ForceDraw()
@@ -88,7 +84,7 @@ func GetRegisterDMSItem(logger log.Logger, data *observer.DeviceState, app *tvie
 						block, _ := pem.Decode([]byte(cert))
 						level.Error(logger).Log("err", err)
 						data.DmsFile.InsertCERT(data.DmsId, block.Bytes, "dms", "", "")
-						err = ioutil.WriteFile(data.Config.Dms.DmsStore+"/dms-"+dms.Id+".key", dmsKey, 0644)
+						err = ioutil.WriteFile(data.Config.Dms.DmsStore+"/dms-"+dms.Id+".key", key, 0644)
 						if err != nil {
 							level.Error(logger).Log("err", err)
 						}
@@ -122,7 +118,20 @@ func GetRegisterDMSItem(logger log.Logger, data *observer.DeviceState, app *tvie
 						}
 					})
 				app.SetRoot(modal, false)
-			})
+			}).AddButton("STOP", func() {
+			level.Info(logger).Log("msg", "STOP... ")
+			flex := tview.NewFlex().
+				AddItem(GetItem(logger, data, app), 70, 1, false).
+				AddItem(enrollerdevicesview.GetEnrolledDevicesItem(logger, data, app), 0, 1, false)
+
+			if err := app.SetRoot(flex, true).EnableMouse(true).Run(); err != nil {
+				panic(err)
+			}
+
+		}).AddButton("QUIT", func() {
+			level.Info(logger).Log("msg", "QUIT... ")
+			app.Stop()
+		})
 		flex = tview.NewFlex().SetDirection(tview.FlexRow).
 			AddItem(view, 3, 1, false).
 			AddItem(form, 4, 1, false).

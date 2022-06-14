@@ -16,8 +16,8 @@ import (
 	"github.com/rivo/tview"
 )
 
-var privkey = flag.String("privkey", "", "privkey")
-var dmsid = flag.String("dmsid", "", "dmsid")
+var DMS_B64_PRIVATE_KEY = flag.String("DMS_B64_PRIVATE_KEY", "", "privkey")
+var DMS_ID = flag.String("DMS_ID", "", "dmsid")
 
 func main() {
 	var logger log.Logger
@@ -42,8 +42,8 @@ func main() {
 		Devices:    make([]observer.EnrolledDeviceData, 0),
 		Config:     cfg,
 		Aps:        "",
-		DmsPrivKey: *privkey,
-		DmsId:      *dmsid,
+		DmsPrivKey: *DMS_B64_PRIVATE_KEY,
+		DmsId:      *DMS_ID,
 		DeviceFile: deviceFile,
 		DmsFile:    dmsFile,
 		Dms:        dto.DMS{},
