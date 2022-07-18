@@ -24,6 +24,8 @@ type Config struct {
 		DevAddr string `json:"addr"`
 	} `json:"devmanager"`
 	Auth struct {
+		Username string `json:"operator_username"`
+		Password string `json:"operator_password"`
 		Endpoint string `json:"endpoint"`
 	} `json:"auth"`
 }

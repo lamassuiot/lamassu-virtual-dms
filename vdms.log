@@ -1,0 +1,77 @@
+ts=2022-07-12T12:52:04.605628576Z level=info caller=enroll.go:97 msg="QUIT... "
+ts=2022-07-12T12:52:06.116436096Z level=info caller=main.go:35 msg="Devices CSRs, CERTs and KEY filesystem home path created"
+ts=2022-07-12T12:52:06.116582693Z level=info caller=main.go:37 msg="DMS CSRs, CERTs and KEY filesystem home path created"
+ts=2022-07-12T12:52:06.116760692Z level=info caller=registerDMS.go:175 msg=
+ts=2022-07-12T12:52:06.116802036Z level=info caller=dms_observer.go:61 msg="Obserer notify... 0"
+ts=2022-07-12T12:52:10.338443677Z level=info caller=enroll.go:102 msg=dms-333205a2-e005-472e-8b36-9dc52c315940
+ts=2022-07-12T12:52:13.071241351Z level=info caller=dms_observer.go:61 msg="Obserer notify... 1"
+ts=2022-07-12T12:52:13.071663742Z level=info caller=service.go:25 msg="Enroll New Device... "
+ts=2022-07-12T12:52:13.075934407Z level=info caller=utils.go:66 msg="Generated ec 384 bits private key"
+ts=2022-07-12T12:52:13.076099959Z level=info caller=service.go:84 msg=333205a2-e005-472e-8b36-9dc52c315940
+ts=2022-07-12T12:52:13.246400256Z level=info caller=service.go:90 msg=1
+ts=2022-07-12T12:52:13.246453848Z level=info caller=service.go:94 msg=IkerCA
+ts=2022-07-12T12:52:13.335060503Z level=info caller=file.go:45 msg="CSR with ID 48dfac34-2b14-412e-9bbe-9cfd363f2e41 inserted in file system"
+ts=2022-07-12T12:52:13.335183518Z level=info caller=file.go:113 msg="KEY with ID 48dfac34-2b14-412e-9bbe-9cfd363f2e41 inserted in file system"
+ts=2022-07-12T12:52:13.335516019Z level=info caller=file.go:91 msg="Certificate with ID 48dfac34-2b14-412e-9bbe-9cfd363f2e41 inserted in file system"
+ts=2022-07-12T12:52:13.335551788Z level=info caller=service.go:105 msg="Certificate content: CN=48dfac34-2b14-412e-9bbe-9cfd363f2e41 Issuer: CN=IkerCA"
+ts=2022-07-12T12:52:13.335569918Z level=info caller=dms_observer.go:61 msg="Obserer notify... 1"
+ts=2022-07-12T12:52:23.339745532Z level=info caller=service.go:25 msg="Enroll New Device... "
+ts=2022-07-12T12:52:23.887108726Z level=info caller=utils.go:46 msg="Generated rsa 3072 bits private key"
+ts=2022-07-12T12:52:23.887637351Z level=info caller=service.go:84 msg=333205a2-e005-472e-8b36-9dc52c315940
+ts=2022-07-12T12:52:24.017168449Z level=info caller=service.go:90 msg=1
+ts=2022-07-12T12:52:24.017310501Z level=info caller=service.go:94 msg=IkerCA
+ts=2022-07-12T12:52:24.065461049Z level=info caller=file.go:45 msg="CSR with ID 81ea152b-0477-49ce-b878-38bb11ae668a inserted in file system"
+ts=2022-07-12T12:52:24.065959317Z level=info caller=file.go:113 msg="KEY with ID 81ea152b-0477-49ce-b878-38bb11ae668a inserted in file system"
+ts=2022-07-12T12:52:24.066328258Z level=info caller=file.go:91 msg="Certificate with ID 81ea152b-0477-49ce-b878-38bb11ae668a inserted in file system"
+ts=2022-07-12T12:52:24.066359794Z level=info caller=service.go:105 msg="Certificate content: CN=81ea152b-0477-49ce-b878-38bb11ae668a Issuer: CN=IkerCA"
+ts=2022-07-12T12:52:24.066378812Z level=info caller=dms_observer.go:61 msg="Obserer notify... 1"
+ts=2022-07-12T12:52:26.125202925Z level=info caller=dms_observer.go:61 msg="Obserer notify... 1"
+ts=2022-07-12T12:52:34.073202527Z level=info caller=enroll.go:59 msg=STOP
+ts=2022-07-12T12:52:40.328335972Z level=info caller=dms_observer.go:61 msg="Obserer notify... 1"
+ts=2022-07-12T12:52:40.328600766Z level=info caller=service.go:25 msg="Enroll New Device... "
+ts=2022-07-12T12:52:40.32870796Z level=info caller=service.go:52 msg="Register Device... "
+ts=2022-07-12T12:52:40.442922051Z level=info caller=utils.go:66 msg="Generated ec 256 bits private key"
+ts=2022-07-12T12:52:40.443099926Z level=info caller=service.go:84 msg=333205a2-e005-472e-8b36-9dc52c315940
+ts=2022-07-12T12:52:40.544309559Z level=info caller=service.go:90 msg=1
+ts=2022-07-12T12:52:40.544426164Z level=info caller=service.go:94 msg=IkerCA
+ts=2022-07-12T12:52:40.606514436Z level=info caller=file.go:45 msg="CSR with ID f1da7cf2-d9a3-411d-ac9c-0f8618e5017a inserted in file system"
+ts=2022-07-12T12:52:40.606668584Z level=info caller=file.go:113 msg="KEY with ID f1da7cf2-d9a3-411d-ac9c-0f8618e5017a inserted in file system"
+ts=2022-07-12T12:52:40.606979075Z level=info caller=file.go:91 msg="Certificate with ID f1da7cf2-d9a3-411d-ac9c-0f8618e5017a inserted in file system"
+ts=2022-07-12T12:52:40.607017432Z level=info caller=service.go:105 msg="Certificate content: CN=f1da7cf2-d9a3-411d-ac9c-0f8618e5017a Issuer: CN=IkerCA"
+ts=2022-07-12T12:52:40.607038358Z level=info caller=dms_observer.go:61 msg="Obserer notify... 1"
+ts=2022-07-12T12:52:42.66134363Z level=info caller=dms_observer.go:61 msg="Obserer notify... 1"
+ts=2022-07-12T12:52:50.615654142Z level=info caller=enroll.go:59 msg=STOP
+ts=2022-07-12T12:54:32.845145372Z level=info caller=main.go:35 msg="Devices CSRs, CERTs and KEY filesystem home path created"
+ts=2022-07-12T12:54:32.845206809Z level=info caller=main.go:37 msg="DMS CSRs, CERTs and KEY filesystem home path created"
+ts=2022-07-12T12:54:32.845322115Z level=info caller=registerDMS.go:177 msg=
+ts=2022-07-12T12:54:32.845345005Z level=info caller=dms_observer.go:61 msg="Obserer notify... 0"
+ts=2022-07-12T12:54:44.425573108Z level=info caller=registerDMS.go:177 msg=RSA
+ts=2022-07-12T12:54:44.425732515Z level=info caller=dms_observer.go:61 msg="Obserer notify... 1"
+ts=2022-07-12T13:03:07.248491695Z level=info caller=main.go:35 msg="Devices CSRs, CERTs and KEY filesystem home path created"
+ts=2022-07-12T13:03:07.248554706Z level=info caller=main.go:37 msg="DMS CSRs, CERTs and KEY filesystem home path created"
+ts=2022-07-12T13:03:07.248721545Z level=info caller=registerDMS.go:197 msg=
+ts=2022-07-12T13:03:07.248750074Z level=info caller=dms_observer.go:61 msg="Obserer notify... 0"
+ts=2022-07-12T13:03:22.66090966Z level=info caller=main.go:35 msg="Devices CSRs, CERTs and KEY filesystem home path created"
+ts=2022-07-12T13:03:22.660979266Z level=info caller=main.go:37 msg="DMS CSRs, CERTs and KEY filesystem home path created"
+ts=2022-07-12T13:03:22.661136479Z level=info caller=registerDMS.go:197 msg=
+ts=2022-07-12T13:03:22.66116312Z level=info caller=dms_observer.go:61 msg="Obserer notify... 0"
+ts=2022-07-12T13:04:07.96210945Z level=info caller=registerDMS.go:288 msg="QUIT... "
+ts=2022-07-12T13:04:09.576357701Z level=info caller=main.go:35 msg="Devices CSRs, CERTs and KEY filesystem home path created"
+ts=2022-07-12T13:04:09.576443893Z level=info caller=main.go:37 msg="DMS CSRs, CERTs and KEY filesystem home path created"
+ts=2022-07-12T13:04:09.576641622Z level=info caller=registerDMS.go:198 msg=
+ts=2022-07-12T13:04:09.576676014Z level=info caller=dms_observer.go:61 msg="Obserer notify... 0"
+ts=2022-07-12T13:04:16.655250939Z level=info caller=registerDMS.go:198 msg=RSA
+ts=2022-07-12T13:04:16.655340016Z level=info caller=dms_observer.go:61 msg="Obserer notify... 1"
+ts=2022-07-12T13:05:56.862470392Z level=info caller=main.go:35 msg="Devices CSRs, CERTs and KEY filesystem home path created"
+ts=2022-07-12T13:05:56.862532152Z level=info caller=main.go:37 msg="DMS CSRs, CERTs and KEY filesystem home path created"
+ts=2022-07-12T13:05:56.862683082Z level=info caller=registerDMS.go:175 msg=
+ts=2022-07-12T13:05:56.862712181Z level=info caller=dms_observer.go:61 msg="Obserer notify... 0"
+ts=2022-07-12T13:06:54.896394134Z level=info caller=main.go:35 msg="Devices CSRs, CERTs and KEY filesystem home path created"
+ts=2022-07-12T13:06:54.896465684Z level=info caller=main.go:37 msg="DMS CSRs, CERTs and KEY filesystem home path created"
+ts=2022-07-12T13:06:54.896599096Z level=info caller=registerDMS.go:173 msg=
+ts=2022-07-12T13:06:54.896618582Z level=info caller=dms_observer.go:61 msg="Obserer notify... 0"
+ts=2022-07-12T13:30:25.883934722Z level=info caller=main.go:35 msg="Devices CSRs, CERTs and KEY filesystem home path created"
+ts=2022-07-12T13:30:25.884089688Z level=info caller=main.go:37 msg="DMS CSRs, CERTs and KEY filesystem home path created"
+ts=2022-07-12T13:30:25.884305658Z level=info caller=registerDMS.go:173 msg=
+ts=2022-07-12T13:30:25.884356832Z level=info caller=dms_observer.go:61 msg="Obserer notify... 0"
+ts=2022-07-12T13:30:31.457230245Z level=info caller=enroll.go:102 msg=dms-248cd97f-88fe-430a-a723-7fbe764c157f

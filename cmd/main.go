@@ -2,6 +2,7 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"os"
 
@@ -30,7 +31,15 @@ func main() {
 		logger = log.With(logger, "caller", log.DefaultCaller)
 	}
 	flag.Parse()
-	cfg, _ := config.NewConfig()
+
+	cfg, err := config.NewConfig()
+	if err != nil {
+		panic(err)
+	}
+
+	bytesCfg, _ := json.Marshal(cfg)
+	level.Info(logger).Log("msg", string(bytesCfg))
+
 	deviceFile := filestore.NewFile(cfg.Dms.DeviceStore, logger)
 	level.Info(logger).Log("msg", "Devices CSRs, CERTs and KEY filesystem home path created")
 	dmsFile := filestore.NewFile(cfg.Dms.DmsStore, logger)

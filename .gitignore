@@ -1,3 +1,6 @@
 .vscode/*
 nogit/*
-*_certificates/*
+*-certificates/*
+*.key
+*.crt
+*.log

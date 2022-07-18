@@ -1,0 +1,23 @@
+{
+    "domain":"$VDMS_DOMAIN",
+    "dms": {
+        "device_store": "/app/device-certificates",
+        "dms_store": "/app/dms-certificates",
+        "endpoint":"$VDMS_DOMAIN/api/dmsenroller",
+        "common_name":"Default-DMS",
+        "country":"$VDMS_COUNTRY",
+        "locality":"$VDMS_LOCALITY",
+        "organization":"$VDMS_ORGANIZATION",
+        "organization_unit":"$VDMS_ORGANIZATION_UNIT",
+        "state":"$VDMS_STATE"
+    },
+    "devmanager":{
+        "devcrt": "/app/downstream/tls.crt",
+        "addr": "$VDMS_DOMAIN/api/devmanager"
+    },
+    "auth":{
+        "endpoint":"auth.$VDMS_DOMAIN",
+        "operator_username":"$VDMS_USERNAME",
+        "operator_password":"$VDMS_PASSWORD"
+    }
+}

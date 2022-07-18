@@ -4,6 +4,7 @@ import (
 	"crypto/x509"
 	"encoding/pem"
 	"io/ioutil"
+	"strings"
 	"time"
 
 	"github.com/go-kit/kit/log/level"
@@ -17,6 +18,7 @@ import (
 
 func GetEnrollItem(logger log.Logger, data *observer.DeviceState, app *tview.Application) tview.Primitive {
 	devManagerEndpoint := data.Config.DevManager.DevAddr
+	var dmsCrtFile, dmsKeyFile string
 	var flex *tview.Flex
 	statusTextView := tview.NewTextView().
 		SetDynamicColors(true).
@@ -24,19 +26,14 @@ func GetEnrollItem(logger log.Logger, data *observer.DeviceState, app *tview.App
 		SetWordWrap(true).
 		SetTextAlign(tview.AlignCenter).
 		SetText(" ")
-
+	form2 := tview.NewForm()
 	form := tview.NewForm().
 		AddInputField("Device Manager endpoint", devManagerEndpoint, 50, nil, func(text string) {
 			devManagerEndpoint = text
 		}).
-		AddInputField("DMS ID", data.Dms.Id, 50, nil, func(text string) {
-			data.Dms.Id = text
-		}).
 		AddButton("Auto-Enroll", func() {
 			statusTextView.SetText("AUTO-ENROLLING...")
 			app.ForceDraw()
-			dmsCrtFile := data.Config.Dms.DmsStore + "/dms-" + data.Dms.Id + ".crt"
-			dmsKeyFile := data.Config.Dms.DmsStore + "/dms-" + data.Dms.Id + ".key"
 
 			serverCert, err := utils.ReadCertPool(data.Config.DevManager.DevCrt)
 			if err != nil {
@@ -100,9 +97,54 @@ func GetEnrollItem(logger log.Logger, data *observer.DeviceState, app *tview.App
 		level.Info(logger).Log("msg", "QUIT... ")
 		app.Stop()
 	})
+	form2.AddDropDown("DMS ID", getDmsIds(data.Config.Dms.DmsStore, logger), 0, func(option string, optionIndex int) {
+		if len(option) > 0 && optionIndex > 0 {
+			level.Info(logger).Log("msg", option)
+			data.Dms.Id = strings.TrimPrefix(option, "dms-")
+			dmsKeyFile = data.Config.Dms.DmsStore + "/" + option + ".key"
+			dmsCrtFile = data.Config.Dms.DmsStore + "/" + option + ".crt"
+		}
+	}).AddButton("Refresh", func() {
+		form2.Clear(false)
+		form2.AddDropDown("DMS ID", getDmsIds(data.Config.Dms.DmsStore, logger), 0, func(option string, optionIndex int) {
+			if len(option) > 0 && optionIndex > 0 {
+				dmsKeyFile = data.Config.Dms.DmsStore + "/" + option + ".key"
+				dmsCrtFile = data.Config.Dms.DmsStore + "/" + option + ".crt"
+			}
+		})
 
+	})
 	flex = tview.NewFlex().SetDirection(tview.FlexRow).
+		AddItem(form2, 7, 0, false).
 		AddItem(form, 7, 0, false).
 		AddItem(statusTextView, 7, 1, false)
 	return flex
+}
+func getDmsIds(path string, logger log.Logger) []string {
+	files, _ := ioutil.ReadDir(path)
+	var s []string
+	s = append(s, "")
+
+	for _, file := range files {
+		fileName := file.Name()
+		if len(fileName) > 0 {
+			last := len(fileName) - 4
+			fileName = fileName[:last]
+			if !contains(s, fileName) {
+
+				s = append(s, fileName)
+			}
+		}
+
+	}
+	return s
+}
+func contains(s []string, str string) bool {
+	for _, v := range s {
+		if v == str {
+			return true
+		}
+	}
+
+	return false
 }

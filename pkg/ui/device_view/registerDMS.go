@@ -52,8 +52,8 @@ func GetRegisterDMSItem(logger log.Logger, data *observer.DeviceState, app *tvie
 		},
 		AuthMethod: client.JWT,
 		AuthMethodConfig: &client.JWTConfig{
-			Username: "enroller",
-			Password: "enroller",
+			Username: data.Config.Auth.Username,
+			Password: data.Config.Auth.Username,
 			URL: &url.URL{
 				Scheme: "https",
 				Host:   data.Config.Auth.Endpoint,
@@ -143,11 +143,9 @@ func GetRegisterDMSItem(logger log.Logger, data *observer.DeviceState, app *tvie
 			AddInputField("DMS Register endpoint", dmsEndpoint, 50, nil, func(text string) {
 				dmsEndpoint = text
 			}).
-			AddInputField("DMS Name", dmsName, 50, nil, func(text string) {
-				dmsName = text
-			}).
 			AddInputField("Common Name", common_name, 50, nil, func(text string) {
 				common_name = text
+				dmsName = text
 			}).
 			AddInputField("Country", country, 50, nil, func(text string) {
 				country = text

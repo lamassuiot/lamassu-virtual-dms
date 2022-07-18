@@ -161,7 +161,7 @@ func RandomKeyTypeBits() (string, int) {
 		keybit = KeyBits[Index]
 		return KeyType, keybit
 	} else {
-		KeyBits := []int{224, 256, 384}
+		KeyBits := []int{256, 384}
 		Index := rand.Intn(len(KeyBits))
 		keybit = KeyBits[Index]
 		return KeyType, keybit

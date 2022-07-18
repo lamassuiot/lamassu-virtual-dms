@@ -34,8 +34,8 @@ func Enroll(lamassuEstClient estclient.LamassuEstClient, data *observer.DeviceSt
 		},
 		AuthMethod: client.JWT,
 		AuthMethodConfig: &client.JWTConfig{
-			Username: "enroller",
-			Password: "enroller",
+			Username: data.Config.Auth.Username,
+			Password: data.Config.Auth.Username,
 			URL: &url.URL{
 				Scheme: "https",
 				Host:   data.Config.Auth.Endpoint,
@@ -71,8 +71,8 @@ func Enroll(lamassuEstClient estclient.LamassuEstClient, data *observer.DeviceSt
 			},
 			AuthMethod: client.JWT,
 			AuthMethodConfig: &client.JWTConfig{
-				Username: "enroller",
-				Password: "enroller",
+				Username: data.Config.Auth.Username,
+				Password: data.Config.Auth.Username,
 				URL: &url.URL{
 					Scheme: "https",
 					Host:   data.Config.Auth.Endpoint,
@@ -81,11 +81,13 @@ func Enroll(lamassuEstClient estclient.LamassuEstClient, data *observer.DeviceSt
 			},
 			CACertificate: data.Config.DevManager.DevCrt,
 		})
+		level.Info(logger).Log("msg", data.Dms.Id)
 		dms, err := dmsClient.GetDMSbyID(ctx, data.Dms.Id)
 		if err != nil {
 			level.Error(logger).Log("err", err)
 			return "", "", "", "", err
 		}
+		level.Info(logger).Log("msg", len(dms.AuthorizedCAs))
 		index := rand.Intn(len(dms.AuthorizedCAs))
 		aps = dms.AuthorizedCAs[index]
 	}
