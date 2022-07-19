@@ -29,7 +29,7 @@ type concreteObserver struct {
 func GetRegisterDMSItem(logger log.Logger, data *observer.DeviceState, app *tview.Application, pages *tview.Pages) tview.Primitive {
 	dmsEndpoint := data.Config.Dms.Endpoint
 	var key_type, key_bits string
-	dmsName := data.Config.Dms.Name
+	dmsName := data.Config.Dms.CN
 	common_name := data.Config.Dms.CN
 	country := data.Config.Dms.C
 	locality := data.Config.Dms.L

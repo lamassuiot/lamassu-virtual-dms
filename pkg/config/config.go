@@ -17,7 +17,6 @@ type Config struct {
 		O           string `json:"organization"`
 		OU          string `json:"organization_unit"`
 		ST          string `json:"state"`
-		Name        string `json:"dms_name"`
 	} `json:"dms"`
 	DevManager struct {
 		DevCrt  string `json:"devcrt"`
